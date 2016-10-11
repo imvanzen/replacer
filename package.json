@@ -1,0 +1,15 @@
+{
+  "name": "replacer",
+  "version": "1.0.0",
+  "description": "Transforms all the square bracket labels into one standard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jakub Reczko",
+  "license": "MIT",
+  "repository": "https://github.com/imvanzen/replacer.git",
+  "dependencies": {
+    "lodash": "^4.16.4"
+  }
+}
