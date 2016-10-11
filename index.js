@@ -4,8 +4,8 @@ const _ = require('lodash');
 const fs = require('fs');
 const path = require('path');
 
-const BASE_PATH = '/home/imvanzen/Desktop/replacer/test';
-const MAX_DEPTH = 1;
+const BASE_PATH = '/home/imvanzen/Desktop/rspective/voucherify';
+const MAX_DEPTH = 100;
 
 const EXCLUDED_NAMES = [
     '.git',
@@ -14,12 +14,14 @@ const EXCLUDED_NAMES = [
     'node_modules',
     'dist',
     'bin',
-    'lib'
+    'lib',
+    'target',
+    'test'
 ];
 
-const ALLOWED_EXTENSIONS = ['.js'];
+const ALLOWED_EXTENSIONS = ['.java'];
 
-const LOG_TYPES = ['log', 'info', 'error', 'debug'];
+const LOG_TYPES = ['warn', 'info', 'error', 'trace', 'debug'];
 
 console.info('[replacer] Read directory. Path: %s, Max Depth: %s', BASE_PATH, MAX_DEPTH);
 
@@ -75,16 +77,15 @@ const replacer = (base_directory, depth) => {
         while (i <= l) {
 
             // Find `console` invocation
-            if (fb[i] === 'c' &&
-                fb[i+1] === 'o' &&
-                fb[i+2] === 'n' &&
-                fb[i+3] === 's' &&
-                fb[i+4] === 'o' &&
-                fb[i+5] === 'l' &&
-                fb[i+6] === 'e' &&
-                fb[i+7] === '.') {
+            if (fb[i] === 'L' &&
+                fb[i+1] === 'O' &&
+                fb[i+2] === 'G' &&
+                fb[i+3] === 'G' &&
+                fb[i+4] === 'E' &&
+                fb[i+5] === 'R' &&
+                fb[i+6] === '.') {
 
-                i += 8;
+                i += 7;
 
                 let j = 0;
                 let type = "";
@@ -129,6 +130,7 @@ const replacer = (base_directory, depth) => {
                 } while (label);
 
                 nfb = nfb.replace(logMsg, newLogMsg);
+                console.log('[replacer] Replaced log. File: %s, Type: %s', f, type);
             } else {
                 i++;
             }
@@ -138,7 +140,7 @@ const replacer = (base_directory, depth) => {
     });
 
     // exit if max depth reached
-    if (depth === 0) {
+    if (depth === 0 || _.isEmpty(filtered_dirs)) {
         return;
     }
 
